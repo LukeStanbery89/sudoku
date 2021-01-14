@@ -4,6 +4,7 @@
     "description": "A simple sudoku game written in React.m",
     "main": "App.js",
     "scripts": {
+        "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
         "test": "echo 'no test script set up yet'"
     },
     "repository": {
