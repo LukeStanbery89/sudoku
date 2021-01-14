@@ -1,0 +1,28 @@
+{
+    "name": "sudoku",
+    "version": "1.0.0",
+    "description": "A simple sudoku game written in React.m",
+    "main": "App.js",
+    "scripts": {
+        "test": "echo 'no test script set up yet'"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/npm/cli.git"
+    },
+    "keywords": [
+        "sudoku",
+        "react"
+    ],
+    "author": "Luke Stanbery",
+    "license": "ISC",
+    "dependencies": {
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1"
+    },
+    "devDependencies": {
+        "eslint": "^7.17.0",
+        "eslint-config-prettier": "^7.1.0",
+        "prettier": "^2.2.1"
+    }
+}
