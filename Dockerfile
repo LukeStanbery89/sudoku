@@ -1,7 +1,14 @@
-FROM node:12-stretch AS builder
-WORKDIR /app
-COPY . .
-RUN npm ci && npm dev
+# base image
+FROM node:12.4-alpine
 
-FROM nginx:1.17
-COPY --from=builder /app/build /usr/share/nginx/html
+# set working directory
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY package.json /app/package.json
+RUN npm install
+
+# start app
+CMD ["npm", "run", "dev"]
