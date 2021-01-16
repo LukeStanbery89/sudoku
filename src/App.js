@@ -1,11 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
+import GameBoard from './GameBoard';
 
 const App = () => {
-    return React.createElement(
-        "div",
-        {},
-        React.createElement("h1", {}, "LOADED!")
+    return (
+        <GameBoard />
     )
 }
 
