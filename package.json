@@ -5,10 +5,11 @@
     "main": "App.js",
     "scripts": {
         "dev": "parcel src/index.html --hmr-port 8080",
-        "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-        "test": "jest",
         "docker-build": "docker build -t sudoku:dev .",
-        "docker-run": "docker run --rm -it -v ${PWD}:/app -v /app/node_modules -p 1234:1234 -p 8080:8080 -e CHOKIDAR_USEPOLLING=true sudoku:dev"
+        "docker-run": "docker run --rm -it -v ${PWD}:/app -v /app/node_modules -p 1234:1234 -p 8080:8080 -e CHOKIDAR_USEPOLLING=true sudoku:dev",
+        "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+        "prod": "parcel build src/index.html",
+        "test": "jest"
     },
     "repository": {
         "type": "git",
