@@ -6,7 +6,7 @@
     "scripts": {
         "dev": "parcel src/index.html --hmr-port 8080",
         "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-        "test": "echo 'no test script set up yet'",
+        "test": "jest",
         "docker-build": "docker build -t sudoku:dev .",
         "docker-run": "docker run --rm -it -v ${PWD}:/app -v /app/node_modules -p 1234:1234 -p 8080:8080 -e CHOKIDAR_USEPOLLING=true sudoku:dev"
     },
@@ -21,17 +21,24 @@
     "author": "Luke Stanbery",
     "license": "ISC",
     "dependencies": {
+        "lodash.isequal": "^4.5.0",
         "react": "^17.0.1",
         "react-dom": "^17.0.1"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.12.11",
+        "@babel/preset-react": "^7.12.10",
         "babel-eslint": "^10.1.0",
+        "babel-jest": "^26.6.3",
         "eslint": "^7.17.0",
         "eslint-config-prettier": "^7.1.0",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-jsx-a11y": "^6.4.1",
         "eslint-plugin-react": "^7.22.0",
+        "jest": "^26.6.3",
         "parcel-bundler": "^1.12.4",
-        "prettier": "^2.2.1"
+        "prettier": "^2.2.1",
+        "react-test-renderer": "^17.0.1",
+        "sass": "^1.32.4"
     }
 }
