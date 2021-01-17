@@ -4,11 +4,14 @@
     "description": "A simple sudoku game written in React.m",
     "main": "App.js",
     "scripts": {
+        "build": "parcel build src/index.html",
         "dev": "parcel src/index.html --hmr-port 8080",
-        "docker-build": "docker build -t sudoku:dev .",
+        "docker-build-dev": "docker build -f dev.Dockerfile -t sudoku:dev .",
+        "docker-build-prod": "docker build -f prod.Dockerfile -t sudoku:prod .",
         "docker-run": "docker run --rm -it -v ${PWD}:/app -v /app/node_modules -p 1234:1234 -p 8080:8080 -e CHOKIDAR_USEPOLLING=true sudoku:dev",
+        "docker-run-prod": "docker run --rm -it -v ${PWD}:/app -v /app/node_modules -p 5000:5000 -p 8080:8080 -e CHOKIDAR_USEPOLLING=true sudoku:prod",
         "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
-        "prod": "parcel build src/index.html",
+        "serve": "node ./node_modules/serve/bin/serve.js dist",
         "test": "jest"
     },
     "repository": {
@@ -25,7 +28,8 @@
         "lodash.isequal": "^4.5.0",
         "parcel-bundler": "^1.12.4",
         "react": "^17.0.1",
-        "react-dom": "^17.0.1"
+        "react-dom": "^17.0.1",
+        "serve": "^11.3.2"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.12.11",
