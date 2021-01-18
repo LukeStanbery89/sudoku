@@ -36,6 +36,7 @@ export function rowsAreValid(gameBoard) {
             testCase.set(gameBoard[row][column], testCase.get(gameBoard[row][column]) ? testCase.get(gameBoard[row][column]) + 1 : 1);
         }
 
+        // Ensure that each number 1-9 appears exactly once
         if (!isEqual(testCase, validNumbers)) return false;
 
         testCase = new Map();
@@ -56,6 +57,7 @@ export function columnsAreValid(gameBoard) {
             testCase.set(gameBoard[row][column], testCase.get(gameBoard[row][column]) ? testCase.get(gameBoard[row][column]) + 1 : 1);
         }
 
+        // Ensure that each number 1-9 appears exactly once
         if (!isEqual(testCase, validNumbers)) return false;
 
         testCase = new Map();
@@ -82,4 +84,68 @@ export function getComparisonMap() {
     map.set(9, 1);
 
     return map;
+}
+
+export function partialGameBoardIsValid(gameBoard) {
+    console.log('gameBoard: ', gameBoard);
+
+    if (!partialRowsAreValid(gameBoard)) return false;
+
+    if (!partialColumnsAreValid(gameBoard)) return false;
+
+    if (!partialGridsAreValid(gameBoard)) return false;
+
+    return true;
+}
+
+export function partialRowsAreValid(gameBoard) {
+    let testCase = new Map();
+    for (const row in gameBoard) {
+        for (const column in gameBoard[row]) {
+            if (gameBoard[row][column]) {
+                testCase.set(gameBoard[row][column], testCase.get(gameBoard[row][column]) ? testCase.get(gameBoard[row][column]) + 1 : 1);
+            }
+        }
+
+        // Ensure that no numbers are repeated
+        for (const [key, value] of testCase) {
+            console.log(value, key);
+            if (value !== 1) {
+                return false;
+            }
+        }
+
+        testCase = new Map();
+    }
+
+    return true;
+}
+
+export function partialColumnsAreValid(gameBoard) {
+    const rowCount = gameBoard.length;
+    const colCount = gameBoard[0].length;
+
+    let testCase = new Map();
+    for (let column = 0; column < colCount; column++) {
+        for (let row = 0; row < rowCount; row++) {
+            testCase.set(gameBoard[row][column], testCase.get(gameBoard[row][column]) ? testCase.get(gameBoard[row][column]) + 1 : 1);
+        }
+
+        // Ensure that no numbers are repeated
+        for (const [key, value] of testCase) {
+            console.log(value, key);
+            if (value !== 1) {
+                return false;
+            }
+        }
+
+        testCase = new Map();
+    }
+
+    return true;
+}
+
+export function partialGridsAreValid(gameBoard) {
+    // TODO: Write grid validation function
+    return true;
 }

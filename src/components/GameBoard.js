@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Square from "./Square";
-import { gameBoardIsValid, getNewGameBoard } from "../utils";
+import { partialGameBoardIsValid, getNewGameBoard } from "../utils";
 
 export default function GameBoard() {
     const [squares, setSquares] = useState(getNewGameBoard());
@@ -9,7 +9,7 @@ export default function GameBoard() {
         let tempSquares = [...squares];
         tempSquares[row][column] = parseInt(value) || value;
         setSquares(tempSquares);
-        console.log("gameBoardIsValid: ", gameBoardIsValid(squares));
+        console.log("gameBoardIsValid: ", partialGameBoardIsValid(squares));
     }
 
     return (
