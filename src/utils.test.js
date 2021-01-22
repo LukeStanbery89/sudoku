@@ -416,7 +416,7 @@ test('Expect partial columns with 1-9 to validate correctly', () => {
     ])).toBe(false);
 });
 
-test('All nine of the partial 3x3 grids to validate correctly', () => {
+test('Expect all nine of the partial 3x3 grids to validate correctly', () => {
     expect(utils.gridsAreValid([
         [9, 7, 6, 4, 8, 1, 3, 2, 5],
         [1, 4, 3, 2, 5, 9, 7, 8, 6],
@@ -587,4 +587,113 @@ test('All nine of the partial 3x3 grids to validate correctly', () => {
         [3, 8, 9, 1, 4, 5, 6, 7, 2],
         [null, null, null, null, null, null, null, null, null],
     ])).toBe(false);
+});
+
+test('Expect a partial 1-9 test case map to validate correctly', () => {
+    expect(utils.partialTestCaseIsValid(new Map([
+        [1, 1],
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 1],
+        [8, 1],
+        [9, 1],
+    ]))).toBe(true);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [1, 1],
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 1],
+        [8, 1],
+    ]))).toBe(true);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 1],
+        [8, 1],
+        [9, 1],
+    ]))).toBe(true);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [5, 1],
+    ]))).toBe(true);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [1, 2],
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 1],
+        [8, 1],
+        [9, 1],
+    ]))).toBe(false);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [1, 5],
+        [2, 4],
+        [3, 5],
+        [4, 4],
+        [5, 3],
+        [6, 2],
+        [7, 1],
+        [8, 189],
+        [9, 2],
+    ]))).toBe(false);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [1, 3],
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 1],
+        [8, 4],
+    ]))).toBe(false);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [1, 1],
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 1],
+        [8, 1],
+        [9, 1],
+        [10, 1],
+    ]))).toBe(false);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [1, 1],
+        [2, 1],
+        [3, 1],
+        [4, 1],
+        [5, 1],
+        [6, 1],
+        [7, 1],
+        [8, 1],
+        [9, 1],
+        [10, 20],
+    ]))).toBe(false);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [10, 1],
+    ]))).toBe(false);
+
+    expect(utils.partialTestCaseIsValid(new Map([
+        [10, 6],
+    ]))).toBe(false);
 });

@@ -3,20 +3,19 @@ const isEqual = require('lodash.isequal');
 export function getNewGameBoard() {
     // TODO: Write an algorithm to spin up a new game board 
     return [
-        [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        [2, 3, 4, 5, 6, 7, 8, 9, 1],
-        [3, 4, 5, 6, 7, 8, 9, 1, 2],
-        [4, 5, 6, 7, 8, 9, 1, 2, 3],
-        [5, 6, 7, 8, 9, 1, 2, 3, 4],
-        [6, 7, 8, 9, 1, 2, 3, 4, 5],
-        [7, 8, 9, 1, 2, 3, 4, 5, 6],
-        [8, 9, 1, 2, 3, 4, 5, 6, 7],
-        [9, 1, 2, 3, 4, 5, 6, 7, 8],
+        [9, 7, 6, 4, 8, 1, 3, 2, 5],
+        [1, 4, 3, 2, 5, 9, 7, 8, 6],
+        [5, 2, 8, 3, 7, 6, 1, 9, 4],
+        [6, 9, 4, 5, 1, 8, 2, 3, 7],
+        [8, 1, 2, 7, 3, 4, 5, 6, 9],
+        [7, 3, 5, 9, 6, 2, 4, 1, 8],
+        [4, 6, 7, 8, 2, 3, 9, 5, 1],
+        [2, 5, 1, 6, 9, 7, 8, 4, 3],
+        [3, 8, 9, 1, 4, 5, 6, 7, 2],
     ];
 }
 
 export function gameBoardIsValid(gameBoard) {
-    console.log('gameBoard: ', gameBoard);
 
     if (!rowsAreValid(gameBoard)) return false;
 
@@ -67,7 +66,37 @@ export function columnsAreValid(gameBoard) {
 }
 
 export function gridsAreValid(gameBoard) {
-    // TODO: Write grid validation function
+    // Ensure that the gameboard is the correct dimensions
+    if (gameBoard.length !== 9 || gameBoard[0].length !== 9) {
+        return false;
+    }
+
+    let validNumbers = getComparisonMap();
+
+    // Iterate over the nine 3x3 grids within the gameboard
+    for (let gridRow = 0; gridRow < 3; gridRow++) {
+        for (let gridCol = 0; gridCol < 3; gridCol++) {
+
+            // Iterate over each square within the current 3x3 grid
+            let testCase = new Map();
+            let rowStart = gridRow * 3;
+            let rowEnd = rowStart + 2;
+            let colStart = gridCol * 3;
+            let colEnd = colStart + 2;
+
+            for (let row = rowStart; row <= rowEnd; row++) {
+                for (let column = colStart; column <= colEnd; column++) {
+                    testCase.set(gameBoard[row][column], testCase.get(gameBoard[row][column]) ? testCase.get(gameBoard[row][column]) + 1 : 1);
+                }
+            }
+
+            // Ensure that each number 1-9 appears exactly once
+            if (!isEqual(testCase, validNumbers)) return false;
+
+            testCase = new Map();
+        }
+    }
+
     return true;
 }
 
@@ -87,7 +116,6 @@ export function getComparisonMap() {
 }
 
 export function partialGameBoardIsValid(gameBoard) {
-    console.log('gameBoard: ', gameBoard);
 
     if (!partialRowsAreValid(gameBoard)) return false;
 
@@ -107,13 +135,8 @@ export function partialRowsAreValid(gameBoard) {
             }
         }
 
-        // Ensure that no numbers are repeated
-        for (const [key, value] of testCase) {
-            console.log(value, key);
-            if (value !== 1) {
-                return false;
-            }
-        }
+        // Ensure that only numbers 1-9 appear, and no more than once
+        if (!partialTestCaseIsValid(testCase)) return false;
 
         testCase = new Map();
     }
@@ -131,13 +154,8 @@ export function partialColumnsAreValid(gameBoard) {
             testCase.set(gameBoard[row][column], testCase.get(gameBoard[row][column]) ? testCase.get(gameBoard[row][column]) + 1 : 1);
         }
 
-        // Ensure that no numbers are repeated
-        for (const [key, value] of testCase) {
-            console.log(value, key);
-            if (value !== 1) {
-                return false;
-            }
-        }
+        // Ensure that only numbers 1-9 appear, and no more than once
+        if (!partialTestCaseIsValid(testCase)) return false;
 
         testCase = new Map();
     }
@@ -146,6 +164,47 @@ export function partialColumnsAreValid(gameBoard) {
 }
 
 export function partialGridsAreValid(gameBoard) {
-    // TODO: Write grid validation function
+    // Ensure that the gameboard is the correct dimensions
+    if (gameBoard.length !== 9 || gameBoard[0].length !== 9) {
+        return false;
+    }
+
+    // Iterate over the nine 3x3 grids within the gameboard
+    for (let gridRow = 0; gridRow < 3; gridRow++) {
+        for (let gridCol = 0; gridCol < 3; gridCol++) {
+
+            // Iterate over each square within the current 3x3 grid
+            let testCase = new Map();
+            let rowStart = gridRow * 3;
+            let rowEnd = rowStart + 2;
+            let colStart = gridCol * 3;
+            let colEnd = colStart + 2;
+
+            for (let row = rowStart; row <= rowEnd; row++) {
+                for (let column = colStart; column <= colEnd; column++) {
+                    testCase.set(gameBoard[row][column], testCase.get(gameBoard[row][column]) ? testCase.get(gameBoard[row][column]) + 1 : 1);
+                }
+            }
+
+            // Ensure that only numbers 1-9 appear, and no more than once
+            if (!partialTestCaseIsValid(testCase)) return false;
+
+            testCase = new Map();
+        }
+    }
+
     return true;
+}
+
+// TODO: Write test
+export function partialTestCaseIsValid(testCase) {
+    let valid = true;
+
+    testCase.forEach((value, key, map) => {
+        if (key < 1 || key > 9 || value > 1) {
+            valid = false;
+        }
+    });
+
+    return valid;
 }
